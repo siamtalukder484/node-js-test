@@ -24,7 +24,13 @@ app.get("/",check,function(req,res){
 })
 
 app.post("/reg",(req,res)=>{
-    console.log("hlw",req.body)
+    let {name, email} = req.body
+    if(name == ""){
+        return res.json({error: "Name is required"})
+    }else{
+        res.json({success: "Form is validate"})
+    }
+    console.log(req.body)
 })
 
 app.listen(8000,function(){
