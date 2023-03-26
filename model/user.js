@@ -10,6 +10,9 @@ let userSchema = new Schema({
     },
     pass:{
         type: String,
+    },
+    code:{
+        type: Number,
     }
 })
 
