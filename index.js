@@ -39,8 +39,20 @@ app.post('/registration', (req, res) => {
     pass:pass
   })
   user.save()
+  res.send({
+    name: user.name,
+    email: user.email,
+  })
+});
+
+
+app.post('/login', async function(req, res){
+  let {email,pass} = req.body
+  let user = await User.find({email:email})
+  console.log(email)
   res.send(user)
 });
+
 
 app.listen(8000, function () {
   console.log("port running");
