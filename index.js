@@ -1,10 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const User = require("./model/user.js")
+const User = require("./model/User.js")
 
 const check = require("./middleware/checker");
-const user = require("./model/user.js");
+const user = require("./model/User.js");
+const emailV = require("./emailVarification.js");
+var jwt = require('jsonwebtoken');
 app.use(express.json());
 
 mongoose
@@ -13,43 +15,15 @@ mongoose
   )
   .then(() => console.log("Connected!"));
 
-// app.get("/", check, function (req, res) {
-//   let user = [
-//     {
-//       name: "siam",
-//     },
-//     {
-//       name: "siam2",
-//     },
-//     {
-//       name: "siam3",
-//     },
-//     {
-//       name: "siam4",
-//     },
-//   ];
-//   res.json(user);
-// });
-
-app.post('/registration', (req, res) => {
+app.post('/reg', async function(req, res){
   let {name,email,pass} = req.body
   let user = new User({
     name:name,
     email:email,
-    pass:pass
+    pass:pass,
+    code: 123*Math.random()
   })
   user.save()
-  res.send({
-    name: user.name,
-    email: user.email,
-  })
-});
-
-
-app.post('/login', async function(req, res){
-  let {email,pass} = req.body
-  let user = await User.find({email:email})
-  console.log(email)
   res.send(user)
 });
 
